@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sleepfox/pages/login_page.dart';
 import 'package:sleepfox/utils/colors.dart';
 import 'package:sleepfox/widgets/main_background.dart';
 
@@ -52,7 +54,9 @@ class ProfilePage extends StatelessWidget {
                   icon: const Icon(Icons.exit_to_app_rounded),
                   text: "Keluar",
                   color: Colors.red,
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.off(() => const LoginPage());
+                  },
                 ),
               ],
             ),

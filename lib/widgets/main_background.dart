@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sleepfox/utils/colors.dart';
 
+// Sebagai background utama untuk banyak page
+
 class MainBackground extends StatelessWidget {
   const MainBackground({
     Key? key,

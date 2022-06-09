@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+// Untuk menyimpan style widget
+
 final defaultBoxGlow = [
   BoxShadow(
     color: Colors.white.withOpacity(0.2),
