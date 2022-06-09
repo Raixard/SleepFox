@@ -37,8 +37,7 @@ class ProfilePage extends StatelessWidget {
                 ProfileButton(
                   icon: const Icon(Icons.edit_rounded),
                   text: "Edit Profil",
-                  onPressed: () {
-                  },
+                  onPressed: () {},
                 ),
                 ProfileButton(
                   icon: const Icon(Icons.settings),
@@ -48,7 +47,14 @@ class ProfilePage extends StatelessWidget {
                 ProfileButton(
                   icon: const Icon(Icons.question_mark_rounded),
                   text: "Tentang",
-                  onPressed: () {},
+                  onPressed: () {
+                    showAboutDialog(
+                      context: context,
+                      applicationVersion: "0.0.1",
+                      applicationName: "SleepFox",
+                      applicationIcon: const Icon(Icons.foggy),
+                    );
+                  },
                 ),
                 ProfileButton(
                   icon: const Icon(Icons.exit_to_app_rounded),
