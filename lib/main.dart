@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         brightness: Brightness.dark,
         fontFamily: "Josefin Sans",
+        primarySwatch: Colors.orange,
       ),
       home: const LoginPage(),
     );
