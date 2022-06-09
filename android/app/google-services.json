@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "36183652865",
+    "project_id": "sleepfox-pemo",
+    "storage_bucket": "sleepfox-pemo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:36183652865:android:7f43ee6916ca27f91b9e00",
+        "android_client_info": {
+          "package_name": "com.thesleepfox.sleepfox"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "36183652865-588msq2bhai22jmqltjt3n0es744jv00.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbvU8cSoWcmEk5wy30d7YbzX33jlf4-MA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "36183652865-588msq2bhai22jmqltjt3n0es744jv00.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
