@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
+import 'package:wakelock/wakelock.dart';
 
 class TimerCountdownController extends GetxController {
   var prompts = "".obs;
@@ -26,6 +27,7 @@ class TimerCountdownController extends GetxController {
   void onInit() {
     super.onInit();
     timerStart();
+    Wakelock.enable();
   }
 
   @override
@@ -38,6 +40,7 @@ class TimerCountdownController extends GetxController {
   void onClose() {
     super.onClose();
     timerStop();
+    Wakelock.disable();
   }
 
   void timerStart() {
