@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sleepfox/getx_controller/main_page_controller.dart';
+import 'package:sleepfox/pages/timer_page.dart';
 import 'package:sleepfox/utils/colors.dart';
 import 'package:sleepfox/pages/dashboard_page.dart';
 import 'package:sleepfox/pages/gallery_page.dart';
@@ -19,7 +20,7 @@ class MainPage extends StatelessWidget {
           index: mpc.tabIndex.value,
           children: [
             const DashboardPage(),
-            Center(child: Text(mpc.tabIndex.value.toString())),
+            TimerPage(),
             GalleryPage(),
             Center(child: Text(mpc.tabIndex.value.toString())),
             const ProfilePage(),
@@ -45,7 +46,7 @@ class MainPage extends StatelessWidget {
                 label: "Timer",
               ),
               NavigationDestination(
-                icon: Icon(Icons.menu_book_rounded),
+                icon: Icon(Icons.filter_frames_rounded),
                 label: "Galeri",
               ),
               NavigationDestination(
