@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sleepfox/utils/widget_styles.dart';
 import 'package:sleepfox/widgets/main_background.dart';
+import 'package:sleepfox/widgets/small_widgets.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -54,10 +55,7 @@ class DashboardPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const GalleryCard(),
-                        const Divider(
-                          thickness: 2,
-                          height: 32,
-                        ),
+                        const SeparatorV(),
                         const Text(
                           "Baru Saja Didengar",
                           style: TextStyle(
@@ -65,7 +63,7 @@ class DashboardPage extends StatelessWidget {
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                        const SizedBox(height: 16),
+                        const SeparatorV(small: true),
                         SingleChildScrollView(
                           clipBehavior: Clip.none,
                           scrollDirection: Axis.horizontal,
@@ -97,10 +95,7 @@ class DashboardPage extends StatelessWidget {
                             ],
                           ),
                         ),
-                        const Divider(
-                          thickness: 2,
-                          height: 32,
-                        ),
+                        const SeparatorV(),
                         const Text(
                           "Terpopuler",
                           style: TextStyle(
@@ -108,7 +103,7 @@ class DashboardPage extends StatelessWidget {
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                        const SizedBox(height: 16),
+                        const SeparatorV(small: true),
                         SingleChildScrollView(
                           clipBehavior: Clip.none,
                           scrollDirection: Axis.horizontal,

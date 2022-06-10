@@ -14,3 +14,4 @@ final defaultBoxGlow = [
 const defaultPadding = EdgeInsets.all(18);
 const defaultPaddingSmall = EdgeInsets.all(12);
 var defaultBorderRadius = BorderRadius.circular(24);
+var defaultBorderRadiusSmall = BorderRadius.circular(12);

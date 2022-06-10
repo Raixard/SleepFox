@@ -5,6 +5,7 @@ import 'package:sleepfox/pages/registration_page.dart';
 import 'package:sleepfox/utils/colors.dart';
 import 'package:sleepfox/utils/widget_styles.dart';
 import 'package:sleepfox/widgets/main_background.dart';
+import 'package:sleepfox/widgets/small_widgets.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -34,7 +35,7 @@ class LoginPage extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                const SizedBox(height: 32),
+                const SeparatorV(),
                 TextField(
                   decoration: InputDecoration(
                     focusColor: cOrange,
@@ -45,7 +46,7 @@ class LoginPage extends StatelessWidget {
                   ),
                   textInputAction: TextInputAction.next,
                 ),
-                const SizedBox(height: 16),
+                const SeparatorV(small: true),
                 TextField(
                   decoration: InputDecoration(
                     focusColor: cOrange,
@@ -56,7 +57,7 @@ class LoginPage extends StatelessWidget {
                   ),
                   obscureText: true,
                 ),
-                const SizedBox(height: 32),
+                const SeparatorV(),
                 SizedBox(
                   height: 64,
                   child: ElevatedButton(
@@ -75,7 +76,7 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 32),
+                const SeparatorV(),
                 const Text(
                   "Belum punya akun?",
                   textAlign: TextAlign.center,

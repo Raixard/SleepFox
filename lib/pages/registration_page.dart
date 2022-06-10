@@ -5,6 +5,7 @@ import 'package:sleepfox/pages/main_page.dart';
 import 'package:sleepfox/utils/colors.dart';
 import 'package:sleepfox/utils/widget_styles.dart';
 import 'package:sleepfox/widgets/main_background.dart';
+import 'package:sleepfox/widgets/small_widgets.dart';
 
 class RegistrationPage extends StatelessWidget {
   const RegistrationPage({Key? key}) : super(key: key);
@@ -34,7 +35,7 @@ class RegistrationPage extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                const SizedBox(height: 32),
+                const SeparatorV(),
                 TextField(
                   decoration: InputDecoration(
                     focusColor: cOrange,
@@ -46,7 +47,7 @@ class RegistrationPage extends StatelessWidget {
                   textInputAction: TextInputAction.next,
                   keyboardType: TextInputType.emailAddress,
                 ),
-                const SizedBox(height: 16),
+                const SeparatorV(small: true),
                 TextField(
                   decoration: InputDecoration(
                     focusColor: cOrange,
@@ -57,7 +58,7 @@ class RegistrationPage extends StatelessWidget {
                   ),
                   textInputAction: TextInputAction.next,
                 ),
-                const SizedBox(height: 16),
+                const SeparatorV(small: true),
                 TextField(
                   decoration: InputDecoration(
                     focusColor: cOrange,
@@ -69,7 +70,7 @@ class RegistrationPage extends StatelessWidget {
                   obscureText: true,
                   textInputAction: TextInputAction.next,
                 ),
-                const SizedBox(height: 16),
+                const SeparatorV(small: true),
                 TextField(
                   decoration: InputDecoration(
                     focusColor: cOrange,
@@ -80,7 +81,7 @@ class RegistrationPage extends StatelessWidget {
                   ),
                   obscureText: true,
                 ),
-                const SizedBox(height: 32),
+                const SeparatorV(),
                 SizedBox(
                   height: 64,
                   child: ElevatedButton(
@@ -99,7 +100,7 @@ class RegistrationPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 32),
+                const SeparatorV(),
                 const Text(
                   "Sudah punya akun?",
                   textAlign: TextAlign.center,
