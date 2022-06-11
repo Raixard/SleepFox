@@ -1,31 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sleepfox/getx_controller/main_page_controller.dart';
+import 'package:sleepfox/getx_controller/music_controller.dart';
+import 'package:sleepfox/pages/music_page.dart';
 import 'package:sleepfox/pages/timer_page.dart';
 import 'package:sleepfox/utils/colors.dart';
 import 'package:sleepfox/pages/dashboard_page.dart';
 import 'package:sleepfox/pages/gallery_page.dart';
 import 'package:sleepfox/pages/profile_page.dart';
+import 'package:sleepfox/widgets/audio_bottom_bar.dart';
 
 class MainPage extends StatelessWidget {
   MainPage({Key? key}) : super(key: key);
 
   final mpc = Get.put(MainPageController());
+  final mc = Get.put(MusicController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Obx(
-        () => IndexedStack(
-          index: mpc.tabIndex.value,
-          children: [
-            const DashboardPage(),
-            TimerPage(),
-            GalleryPage(),
-            Center(child: Text(mpc.tabIndex.value.toString())),
-            const ProfilePage(),
-          ],
-        ),
+      body: Stack(
+        children: [
+          Obx(
+            () => IndexedStack(
+              index: mpc.tabIndex.value,
+              children: [
+                const DashboardPage(),
+                TimerPage(),
+                GalleryPage(),
+                const MusicPage(),
+                const ProfilePage(),
+              ],
+            ),
+          ),
+          const AudioBottomBar(),
+        ],
       ),
       bottomNavigationBar: NavigationBarTheme(
         data: const NavigationBarThemeData(
@@ -50,8 +59,8 @@ class MainPage extends StatelessWidget {
                 label: "Galeri",
               ),
               NavigationDestination(
-                icon: Icon(Icons.dark_mode_rounded),
-                label: "Tidur",
+                icon: Icon(Icons.music_note_rounded),
+                label: "Musik",
               ),
               NavigationDestination(
                 icon: Icon(Icons.person_rounded),

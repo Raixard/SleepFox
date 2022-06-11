@@ -1,13 +1,20 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:just_audio_background/just_audio_background.dart';
+import 'package:sleepfox/getx_controller/music_controller.dart';
 import 'package:sleepfox/utils/widget_styles.dart';
+import 'package:sleepfox/widgets/card_square.dart';
+import 'package:sleepfox/widgets/card_wide.dart';
 import 'package:sleepfox/widgets/main_background.dart';
-import 'package:sleepfox/widgets/small_widgets.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final mm = Get.find<MusicController>();
     return Scaffold(
       body: MainBackground(
         child: CustomScrollView(
@@ -49,230 +56,66 @@ class DashboardPage extends StatelessWidget {
             SliverList(
               delegate: SliverChildListDelegate(
                 [
-                  Padding(
-                    padding: defaultPadding,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const GalleryCard(),
-                        const SeparatorV(),
-                        const Text(
-                          "Baru Saja Didengar",
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Padding(
+                        padding: defaultPadding,
+                        child: CardWide(
+                          text: "Galeri",
+                        ),
+                      ),
+                      const Padding(
+                        padding: defaultPadding,
+                        child: Text(
+                          "Musik Untukmu",
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                        const SeparatorV(small: true),
-                        SingleChildScrollView(
-                          clipBehavior: Clip.none,
+                      ),
+                      SizedBox(
+                        height: 128,
+                        child: ListView.separated(
+                          padding: defaultPadding.copyWith(top: 0, bottom: 0),
                           scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: const [
-                              CardOneToOne(
-                                text: "Nafsu",
-                                color1: Colors.red,
-                                color2: Colors.purple,
-                              ),
-                              SizedBox(width: 16),
-                              CardOneToOne(
-                                text: "Ketenangan Tiada Tara",
-                                color1: Colors.green,
-                                color2: Colors.purple,
-                              ),
-                              SizedBox(width: 16),
-                              CardOneToOne(
-                                text: "Hebat",
-                                color1: Colors.lightBlue,
-                                color2: Colors.lightGreen,
-                              ),
-                              SizedBox(width: 16),
-                              CardOneToOne(
-                                text: "Tusuynass",
-                                color1: Colors.yellow,
-                                color2: Colors.brown,
-                              ),
-                            ],
-                          ),
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            final tag = mm.playlist.children[index].sequence
+                                .first.tag as MediaItem;
+                            return CardSquare(
+                              text: tag.title,
+                              color1: Colors.primaries[
+                                  Random().nextInt(Colors.primaries.length)],
+                              color2: Colors.primaries[
+                                  Random().nextInt(Colors.primaries.length)],
+                              assetImage: tag.artUri.toString(),
+                              onTap: () {
+                                mm.playSelected(tag.id);
+                              },
+                            );
+                          },
+                          separatorBuilder: (context, index) {
+                            return const SizedBox(width: 16);
+                          },
+                          itemCount: mm.playlist.length.clamp(1, 6),
                         ),
-                        const SeparatorV(),
-                        const Text(
-                          "Terpopuler",
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        const SeparatorV(small: true),
-                        SingleChildScrollView(
-                          clipBehavior: Clip.none,
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: const [
-                              CardOneToOne(
-                                text: "Nafsu",
-                                color1: Colors.red,
-                                color2: Colors.purple,
-                              ),
-                              SizedBox(width: 16),
-                              CardOneToOne(
-                                text: "Ketenangan",
-                                color1: Colors.green,
-                                color2: Colors.purple,
-                              ),
-                              SizedBox(width: 16),
-                              CardOneToOne(
-                                text: "Hebat",
-                                color1: Colors.lightBlue,
-                                color2: Colors.lightGreen,
-                              ),
-                              SizedBox(width: 16),
-                              CardOneToOne(
-                                text: "Tusuynass",
-                                color1: Colors.yellow,
-                                color2: Colors.brown,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
+            Obx(
+              () => SliverVisibility(
+                visible: mm.bottomBarVisibility.value,
+                sliver: const SliverPadding(
+                  padding: EdgeInsets.only(top: 72),
+                ),
+              ),
+            ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class CardOneToOne extends StatelessWidget {
-  const CardOneToOne({
-    Key? key,
-    this.color1 = Colors.green,
-    this.color2 = Colors.lightBlue,
-    required this.text,
-  }) : super(key: key);
-
-  final Color color1;
-  final Color color2;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width / 3,
-      child: AspectRatio(
-        aspectRatio: 1 / 1,
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                color1,
-                color2,
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            borderRadius: defaultBorderRadius,
-          ),
-          child: Stack(
-            children: [
-              Align(
-                alignment: Alignment.bottomRight,
-                child: Opacity(
-                  opacity: 0.2,
-                  child: Image.asset(
-                    "assets/main_page/music.png",
-                  ),
-                ),
-              ),
-              Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  customBorder: RoundedRectangleBorder(
-                    borderRadius: defaultBorderRadius,
-                  ),
-                  onTap: () {},
-                  child: Container(
-                    alignment: Alignment.bottomLeft,
-                    padding: defaultPaddingSmall,
-                    child: Text(
-                      text,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class GalleryCard extends StatelessWidget {
-  const GalleryCard({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 7 / 3,
-      child: ClipRRect(
-        borderRadius: defaultBorderRadius,
-        child: DecoratedBox(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Colors.green,
-                Colors.lightBlue,
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
-          child: Stack(
-            children: [
-              Align(
-                alignment: Alignment.bottomRight,
-                child: Opacity(
-                  opacity: 0.4,
-                  child: Image.asset(
-                    "assets/main_page/gallery.png",
-                  ),
-                ),
-              ),
-              Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  customBorder: RoundedRectangleBorder(
-                    borderRadius: defaultBorderRadius,
-                  ),
-                  onTap: () {
-                  },
-                  child: Container(
-                    alignment: Alignment.bottomLeft,
-                    padding: const EdgeInsets.all(18),
-                    child: const Text(
-                      "Galeri",
-                      style: TextStyle(
-                        fontSize: 48,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );

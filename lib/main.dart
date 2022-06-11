@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:just_audio_background/just_audio_background.dart';
+import 'package:sleepfox/pages/login_page.dart';
 import 'package:sleepfox/pages/main_page.dart';
 
 void main() async {
@@ -15,6 +17,11 @@ void main() async {
     const SystemUiOverlayStyle(
       systemNavigationBarColor: Color(0xFF23195F),
     ),
+  );
+  await JustAudioBackground.init(
+    androidNotificationChannelId: 'com.thesleepfox.sleepfox',
+    androidNotificationChannelName: 'SleepFox',
+    androidNotificationOngoing: true,
   );
   runApp(const MyApp());
 }
@@ -32,7 +39,7 @@ class MyApp extends StatelessWidget {
         fontFamily: "Josefin Sans",
         primarySwatch: Colors.orange,
       ),
-      home: MainPage(),
+      home: const LoginPage(),
     );
   }
 }
