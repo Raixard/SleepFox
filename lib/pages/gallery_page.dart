@@ -27,13 +27,6 @@ class GalleryPage extends StatelessWidget {
         title: const Text("Galeri"),
         backgroundColor: cDarkPurple.withOpacity(0.5),
         shadowColor: Colors.transparent,
-        actions: [
-          IconButton(
-            tooltip: "Kembali ke atas",
-            onPressed: () {},
-            icon: const Icon(Icons.arrow_upward_rounded),
-          ),
-        ],
       ),
       extendBodyBehindAppBar: true,
       body: MainBackground(
