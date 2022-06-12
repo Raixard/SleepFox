@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:sleepfox/pages/login_page.dart';
 import 'package:sleepfox/pages/main_page.dart';
+import 'package:sleepfox/pages/splash_screen.dart';
+import 'package:sleepfox/utils/colors.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,8 +40,11 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
         fontFamily: "Josefin Sans",
         primarySwatch: Colors.orange,
+        scaffoldBackgroundColor: cDarkPurple,
+        backgroundColor: cDarkPurple,
+        dialogBackgroundColor: cDarkPurple,
       ),
-      home: const LoginPage(),
+      home: const SplashScreen(),
     );
   }
 }

@@ -50,9 +50,14 @@ class ProfilePage extends StatelessWidget {
                   onPressed: () {
                     showAboutDialog(
                       context: context,
-                      applicationVersion: "0.0.1",
                       applicationName: "SleepFox",
-                      applicationIcon: const Icon(Icons.foggy),
+                      applicationVersion: "0.0.1",
+                      applicationLegalese: "(CopyLeft) The SleepFox",
+                      applicationIcon: Image.asset(
+                        "assets/icon/icon-white.png",
+                        height: 48,
+                        width: 48,
+                      ),
                     );
                   },
                 ),
