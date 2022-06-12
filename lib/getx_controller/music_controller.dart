@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
@@ -7,17 +9,30 @@ import 'package:sleepfox/model-view/musics.dart';
 class MusicController extends GetxController {
   // Untuk menampilkan bar kecil untuk musik di bagian bawah layar
   var bottomBarVisibility = false.obs;
+  // Untuk memeriksa apakah timer menyala
+  var timerIsOn = false.obs;
 
   // Audio player utama
   final AudioPlayer audioPlayer = AudioPlayer();
   // Playlist
   late ConcatenatingAudioSource _playlist;
+  // Timer agar audio playernya mati otomatis
+  Timer? _timer;
+  // List waktu timer
+  final List<int> _timerPreset = [15, 30, 45, 60, 75, 90, 105, 120];
 
   // Dijalankan saat controller dibuat
   @override
   void onInit() {
     super.onInit();
     setInitialPlaylist();
+  }
+
+  // Audio akan mati bila controller-nya ditutup
+  @override
+  void onClose() {
+    super.onClose();
+    audioPlayer.stop();
   }
 
   // Untuk set playlist
@@ -36,6 +51,9 @@ class MusicController extends GetxController {
   // Getter playlist
   ConcatenatingAudioSource get playlist => _playlist;
 
+  // Getter list timer presets
+  List<int> get timerPreset => _timerPreset;
+
   // Getter untuk playlist dari class Musics
   List<AudioSource> get initialPlaylist => Musics.music.map(
         (e) {
@@ -53,7 +71,10 @@ class MusicController extends GetxController {
   // Mencari indeks musik pada playlist berdasarkan tag id
   int seekById(String id) {
     for (var i = 0; i < _playlist.length; i++) {
+      // Mengambil tag dari item
       var tag = _playlist.children[i].sequence.first.tag as MediaItem;
+      // Bila id dari tag sama dengan parameter,
+      // akan me-return indeks i
       if (tag.id == id) {
         return i;
       }
@@ -73,5 +94,32 @@ class MusicController extends GetxController {
     audioPlayer.play();
     // Menampilkan bar kecil musik
     bottomBarVisibility.value = true;
+  }
+
+  // Mengatur sleep timer
+  void setTimer(int minutes) async {
+    // Bila ada timer yang jalan, akan dibatalkan
+    if (_timer != null) {
+      _timer!.cancel();
+    }
+
+    if (minutes > 0) {
+      // Menyalakan penanda timer berjalan
+      timerIsOn.value = true;
+      // Menjalankan timer sebanyak parameter minutes
+      _timer = Timer(
+        Duration(minutes: minutes),
+        () {
+          // Menghentikan audio player dan menghentikan penanda
+          // saat timer mencapai durasi yang ditentukan
+          audioPlayer.stop();
+          timerIsOn.value = false;
+        },
+      );
+    } else {
+      // Mematikan timer bila minutes = 0
+      timerIsOn.value = false;
+      _timer = null;
+    }
   }
 }
