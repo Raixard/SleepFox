@@ -109,6 +109,7 @@ class RegistrationPage extends StatelessWidget {
                           await FirebaseFirestore.instance.collection("users").doc(userId).set({
                             "email": signInUpController.emailController.text,
                             "username": signInUpController.userNameController.text,
+                            "name": signInUpController.userNameController.text,
                           });
 
                           Get.offAll(() => const UserRouteProcessing());

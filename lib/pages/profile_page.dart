@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sleepfox/getx_controller/user_controller.dart';
 import 'package:sleepfox/pages/login_page.dart';
+import 'package:sleepfox/pages/profile_edit_page.dart';
 import 'package:sleepfox/utils/colors.dart';
 import 'package:sleepfox/widgets/main_background.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  ProfilePage({Key? key}) : super(key: key);
+
+  final UserController userCtrl = Get.put(UserController());
 
   @override
   Widget build(BuildContext context) {
@@ -26,18 +30,27 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 18),
-                const Text(
-                  "Hengki Wisnuwibowo",
-                  style: TextStyle(
+                Obx(() => Text(
+                  userCtrl.name.value,
+                  style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.w700,
                   ),
-                ),
+                )),
+                const SizedBox(height: 18),
+                Obx(() => Text(
+                  userCtrl.userName.value,
+                  style: const TextStyle(
+                    fontSize: 18,
+                  ),
+                )),
                 const SizedBox(height: 32),
                 ProfileButton(
                   icon: const Icon(Icons.edit_rounded),
                   text: "Edit Profil",
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(() => ProfileEditPage());
+                  },
                 ),
                 ProfileButton(
                   icon: const Icon(Icons.settings),

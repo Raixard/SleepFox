@@ -4,13 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:sleepfox/getx_controller/music_controller.dart';
+import 'package:sleepfox/getx_controller/user_controller.dart';
 import 'package:sleepfox/utils/widget_styles.dart';
 import 'package:sleepfox/widgets/card_square.dart';
 import 'package:sleepfox/widgets/card_wide.dart';
 import 'package:sleepfox/widgets/main_background.dart';
 
 class DashboardPage extends StatelessWidget {
-  const DashboardPage({Key? key}) : super(key: key);
+  DashboardPage({Key? key}) : super(key: key);
+
+  final UserController userCtrl = Get.put(UserController());
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +45,14 @@ class DashboardPage extends StatelessWidget {
                         fontSize: 24,
                       ),
                     ),
-                    const Text(
-                      "Hengki Wisnuwibowo",
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w700,
-                      ),
+                    Obx(
+                      () => Text(
+                        userCtrl.name.value,
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      )
                     ),
                   ],
                 ),

@@ -25,11 +25,11 @@ class MainPage extends StatelessWidget {
             () => IndexedStack(
               index: mpc.tabIndex.value,
               children: [
-                const DashboardPage(),
+                DashboardPage(),
                 TimerPage(),
                 GalleryPage(),
                 const MusicPage(),
-                const ProfilePage(),
+                ProfilePage(),
               ],
             ),
           ),
