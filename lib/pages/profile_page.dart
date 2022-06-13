@@ -61,7 +61,7 @@ class ProfilePage extends StatelessWidget {
                   text: "Keluar",
                   color: Colors.red,
                   onPressed: () {
-                    Get.off(() => const LoginPage());
+                    Get.off(() => LoginPage());
                   },
                 ),
               ],

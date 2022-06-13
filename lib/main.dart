@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:sleepfox/pages/login_page.dart';
-import 'package:sleepfox/pages/main_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,7 +38,7 @@ class MyApp extends StatelessWidget {
         fontFamily: "Josefin Sans",
         primarySwatch: Colors.orange,
       ),
-      home: const LoginPage(),
+      home: LoginPage(),
     );
   }
 }
