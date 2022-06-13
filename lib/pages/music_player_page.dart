@@ -30,7 +30,9 @@ class MusicPlayerPage extends StatelessWidget {
             actions: [
               Obx(
                 () => IconButton(
-                  tooltip: "Timer Tidur",
+                  tooltip: mm.timerIsOn.value
+                      ? "Timer Tidur\nDipilih: ${mm.timeSelected.value} menit"
+                      : "Timer Tidur",
                   color: mm.timerIsOn.value ? cOrange : Colors.white,
                   icon: const Icon(Icons.timelapse_rounded),
                   onPressed: () {
@@ -49,11 +51,12 @@ class MusicPlayerPage extends StatelessWidget {
                                     mm.setTimer(0);
                                     Get.back();
                                   },
-                                  child: const Text(
+                                  child: Text(
                                     "Off",
                                     style: TextStyle(
-                                      color: Colors.white,
-                                    ),
+                                        color: mm.timerIsOn.value
+                                            ? Colors.white
+                                            : cOrange),
                                   ),
                                 );
                               } else {
@@ -64,8 +67,12 @@ class MusicPlayerPage extends StatelessWidget {
                                   },
                                   child: Text(
                                     "${mm.timerPreset[index - 1]} menit",
-                                    style: const TextStyle(
-                                      color: Colors.white,
+                                    style: TextStyle(
+                                      color: mm.timerIsOn.value &&
+                                              mm.timeSelected.value ==
+                                                  mm.timerPreset[index - 1]
+                                          ? cOrange
+                                          : Colors.white,
                                     ),
                                   ),
                                 );
@@ -91,7 +98,30 @@ class MusicPlayerPage extends StatelessWidget {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const AudioCurrentArt(),
+                    GestureDetector(
+                      onPanUpdate: (details) {
+                        // Apabila pengguna scroll ke bawah,
+                        // maka akan kembali ke halaman sebelumnya
+                        if (details.delta.dy > 10) {
+                          Get.back();
+                        }
+                        // Apabila pengguna scroll ke kanan,
+                        // maka akan memainkan musik selanjutnya (jika ada)
+                        if (details.delta.dx > 10) {
+                          if (mm.audioPlayer.hasNext) {
+                            mm.audioPlayer.seekToNext();
+                          }
+                        }
+                        // Apabila pengguna scroll ke kiri,
+                        // maka akan memainkan musik sebelumnya (jika ada)
+                        if (details.delta.dx < -10) {
+                          if (mm.audioPlayer.hasPrevious) {
+                            mm.audioPlayer.seekToPrevious();
+                          }
+                        }
+                      },
+                      child: const AudioCurrentArt(),
+                    ),
                     const SeparatorV(),
                     const AudioCurrentMusicTitle(),
                     const SeparatorV(),

@@ -17,11 +17,17 @@ class AudioBottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final mm = Get.find<MusicController>();
     return Obx(
-      () => Visibility(
-        visible: mm.bottomBarVisibility.value,
-        child: Container(
-          alignment: Alignment.bottomCenter,
-          padding: defaultPaddingSmall,
+      () => AnimatedContainer(
+        alignment: mm.bottomBarVisibility.value
+            ? Alignment.bottomCenter
+            : const Alignment(0, 2),
+        padding: defaultPaddingSmall,
+        curve: Curves.easeInOut,
+        duration: const Duration(seconds: 1),
+        child: AnimatedOpacity(
+          opacity: mm.bottomBarVisibility.value ? 1 : 0,
+          duration: const Duration(seconds: 1),
+          curve: Curves.easeInOut,
           child: Container(
             height: 64,
             decoration: BoxDecoration(
@@ -30,12 +36,31 @@ class AudioBottomBar extends StatelessWidget {
             ),
             child: GestureDetector(
               onTap: () {
-                Get.to(() => const MusicPlayerPage());
+                Get.to(
+                  () => const MusicPlayerPage(),
+                  transition: Transition.fade,
+                  curve: Curves.easeInOut,
+                  duration: const Duration(milliseconds: 500),
+                );
               },
               onPanUpdate: (details) {
-                if (details.delta.dy > 0) {
+                // Apabila pengguna melakukan scroll ke bawah
+                // bar musik kecil akan ditutup
+                if (details.delta.dy > 10) {
+                  // Menghentikan audio player
                   mm.audioPlayer.stop();
+                  // Menyembunyikan bar musik
                   mm.bottomBarVisibility.value = false;
+                }
+                // Apabila pengguna melakukan scroll ke atas,
+                // akan pergi ke tampilan music player
+                if (details.delta.dy < -10) {
+                  Get.to(
+                    () => const MusicPlayerPage(),
+                    transition: Transition.fade,
+                    curve: Curves.easeInOut,
+                    duration: const Duration(milliseconds: 500),
+                  );
                 }
               },
               child: Row(

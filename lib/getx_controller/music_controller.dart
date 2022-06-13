@@ -11,6 +11,8 @@ class MusicController extends GetxController {
   var bottomBarVisibility = false.obs;
   // Untuk memeriksa apakah timer menyala
   var timerIsOn = false.obs;
+  // Untuk memeriksa menit timer yang dipilih
+  var timeSelected = 0.obs;
 
   // Audio player utama
   final AudioPlayer audioPlayer = AudioPlayer();
@@ -106,6 +108,8 @@ class MusicController extends GetxController {
     if (minutes > 0) {
       // Menyalakan penanda timer berjalan
       timerIsOn.value = true;
+      // Memasukkan menit ke penanda waktu yang dipilih
+      timeSelected.value = minutes;
       // Menjalankan timer sebanyak parameter minutes
       _timer = Timer(
         Duration(minutes: minutes),
