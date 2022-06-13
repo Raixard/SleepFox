@@ -78,7 +78,12 @@ class LoginPage extends StatelessWidget {
                           password: signInUpController.passwordController.text,
                         );
 
-                        Get.offAll(() => UserRouteProcessing());
+                        Get.offAll(
+                          () => const UserRouteProcessing(),
+                          curve: Curves.easeInOut,
+                          transition: Transition.fadeIn,
+                          duration: const Duration(seconds: 2),
+                        );
                       } on FirebaseAuthException catch (e) {
                         Get.dialog(
                             AlertDialog(content: Text(e.message!), actions: [
@@ -108,7 +113,10 @@ class LoginPage extends StatelessWidget {
                     primary: Colors.white,
                   ),
                   onPressed: () {
-                    Get.off(() => RegistrationPage());
+                    Get.off(
+                      () => RegistrationPage(),
+                      transition: Transition.fadeIn,
+                    );
                   },
                   child: const Text(
                     "Daftar sekarang!",

@@ -108,6 +108,9 @@ class TimerPage extends StatelessWidget {
                           duration: tfc.duration.value,
                           rhythm: tfc.rhythm.value,
                         ),
+                        curve: Curves.easeInOut,
+                        transition: Transition.fadeIn,
+                        duration: const Duration(seconds: 1),
                       );
                     },
                     child: const Text(

@@ -12,6 +12,13 @@ class AudioCurrentArt extends StatelessWidget {
   Widget build(BuildContext context) {
     final mm = Get.find<MusicController>();
     return StreamBuilder<SequenceState?>(
+      initialData: SequenceState(
+        mm.audioPlayer.sequence!,
+        mm.audioPlayer.currentIndex ?? 0,
+        mm.audioPlayer.shuffleIndices!,
+        mm.audioPlayer.shuffleModeEnabled,
+        mm.audioPlayer.loopMode,
+      ),
       stream: mm.audioPlayer.sequenceStateStream,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
@@ -19,10 +26,16 @@ class AudioCurrentArt extends StatelessWidget {
           return AspectRatio(
             aspectRatio: 1 / 1,
             child: ClipRRect(
-              borderRadius: defaultBorderRadius,
-              child: Image.asset(
-                currentItem.artUri.toString(),
-                fit: BoxFit.cover,
+              borderRadius: defaultBorderRadiusSmall,
+              child: Hero(
+                createRectTween: (begin, end) {
+                  return MaterialRectArcTween(begin: begin, end: end);
+                },
+                tag: "audio-current-art",
+                child: Image.asset(
+                  currentItem.artUri.toString(),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           );

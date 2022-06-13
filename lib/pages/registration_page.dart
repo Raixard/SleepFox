@@ -100,25 +100,40 @@ class RegistrationPage extends StatelessWidget {
                     onPressed: () async {
                       if (signInUpController.validateSignUp()) {
                         try {
-                          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                            email: signInUpController.emailController.text.trim(),
-                            password: signInUpController.passwordController.text,
+                          await FirebaseAuth.instance
+                              .createUserWithEmailAndPassword(
+                            email:
+                                signInUpController.emailController.text.trim(),
+                            password:
+                                signInUpController.passwordController.text,
                           );
 
                           var userId = FirebaseAuth.instance.currentUser!.uid;
-                          await FirebaseFirestore.instance.collection("users").doc(userId).set({
+                          await FirebaseFirestore.instance
+                              .collection("users")
+                              .doc(userId)
+                              .set({
                             "email": signInUpController.emailController.text,
-                            "username": signInUpController.userNameController.text,
+                            "username":
+                                signInUpController.userNameController.text,
                             "name": signInUpController.userNameController.text,
                           });
 
-                          Get.offAll(() => const UserRouteProcessing());
+                          Get.offAll(
+                            () => const UserRouteProcessing(),
+                            curve: Curves.easeInOut,
+                            transition: Transition.fadeIn,
+                            duration: const Duration(seconds: 2),
+                          );
                         } on FirebaseAuthException catch (e) {
                           Get.dialog(
                             AlertDialog(
                               content: Text(e.message!),
                               actions: [
-                                TextButton(onPressed: () => Get.back(), child: const Text("Tutup"),),
+                                TextButton(
+                                  onPressed: () => Get.back(),
+                                  child: const Text("Tutup"),
+                                ),
                               ],
                             ),
                           );
@@ -144,7 +159,10 @@ class RegistrationPage extends StatelessWidget {
                     primary: Colors.white,
                   ),
                   onPressed: () {
-                    Get.off(() => LoginPage());
+                    Get.off(
+                      () => LoginPage(),
+                      transition: Transition.fadeIn,
+                    );
                   },
                   child: const Text(
                     "Login sekarang!",

@@ -22,15 +22,21 @@ class MainPage extends StatelessWidget {
       body: Stack(
         children: [
           Obx(
-            () => IndexedStack(
-              index: mpc.tabIndex.value,
-              children: [
-                DashboardPage(),
-                TimerPage(),
-                GalleryPage(),
-                const MusicPage(),
-                ProfilePage(),
-              ],
+            () => AnimatedSwitcher(
+              transitionBuilder: AnimatedSwitcher.defaultTransitionBuilder,
+              switchInCurve: Curves.easeInOut,
+              duration: const Duration(milliseconds: 500),
+              child: IndexedStack(
+                key: ValueKey<int>(mpc.tabIndex.value),
+                index: mpc.tabIndex.value,
+                children: [
+                  DashboardPage(),
+                  TimerPage(),
+                  GalleryPage(),
+                  const MusicPage(),
+                  ProfilePage(),
+                ],
+              ),
             ),
           ),
           const AudioBottomBar(),
