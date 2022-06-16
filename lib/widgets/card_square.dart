@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sleepfox/utils/widget_styles.dart';
 
+// Card berasio 1 : 1
 class CardSquare extends StatelessWidget {
   const CardSquare({
     Key? key,

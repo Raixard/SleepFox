@@ -1,8 +1,8 @@
 import 'package:cached_firestorage/remote_picture.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sleepfox/getx_controller/user_controller.dart';
-import 'package:sleepfox/pages/login_page.dart';
 import 'package:sleepfox/pages/profile_edit_page.dart';
 import 'package:sleepfox/utils/colors.dart';
 import 'package:sleepfox/widgets/main_background.dart';
@@ -82,8 +82,8 @@ class ProfilePage extends StatelessWidget {
                   icon: const Icon(Icons.exit_to_app_rounded),
                   text: "Keluar",
                   color: Colors.red,
-                  onPressed: () {
-                    Get.off(() => LoginPage());
+                  onPressed: () async {
+                    await FirebaseAuth.instance.signOut();
                   },
                 ),
               ],

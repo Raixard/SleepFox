@@ -8,7 +8,7 @@ import 'package:sleepfox/utils/colors.dart';
 import 'package:sleepfox/pages/dashboard_page.dart';
 import 'package:sleepfox/pages/gallery_page.dart';
 import 'package:sleepfox/pages/profile_page.dart';
-import 'package:sleepfox/widgets/audio_bottom_bar.dart';
+import 'package:sleepfox/widgets/audio_widgets/audio_bottom_bar.dart';
 
 class MainPage extends StatelessWidget {
   MainPage({Key? key}) : super(key: key);
@@ -50,7 +50,7 @@ class MainPage extends StatelessWidget {
         child: Obx(
           () => NavigationBar(
             selectedIndex: mpc.tabIndex.value,
-            onDestinationSelected: mpc.changeTabIndex,
+            onDestinationSelected: mpc.setTabIndex,
             destinations: const [
               NavigationDestination(
                 icon: Icon(Icons.home_rounded),

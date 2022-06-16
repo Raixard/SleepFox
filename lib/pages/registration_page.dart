@@ -1,9 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sleepfox/getx_controller/sign_in_up_form_controller.dart';
-import 'package:sleepfox/methods/user_route_processing.dart';
 import 'package:sleepfox/pages/login_page.dart';
 import 'package:sleepfox/utils/colors.dart';
 import 'package:sleepfox/utils/widget_styles.dart';
@@ -41,54 +38,32 @@ class RegistrationPage extends StatelessWidget {
                   ),
                 ),
                 const SeparatorV(),
-                TextField(
-                  decoration: InputDecoration(
-                    focusColor: cOrange,
-                    fillColor: cDarkPurple.withOpacity(0.5),
-                    filled: true,
-                    labelText: "Email",
-                    prefixIcon: const Icon(Icons.email_rounded),
-                  ),
+                TextInputField(
                   controller: signInUpController.emailController,
-                  textInputAction: TextInputAction.next,
+                  labelText: "Email",
+                  icon: const Icon(Icons.email_rounded),
                   keyboardType: TextInputType.emailAddress,
                 ),
                 const SeparatorV(small: true),
-                TextField(
-                  decoration: InputDecoration(
-                    focusColor: cOrange,
-                    fillColor: cDarkPurple.withOpacity(0.5),
-                    filled: true,
-                    labelText: "Username",
-                    prefixIcon: const Icon(Icons.person_rounded),
-                  ),
+                TextInputField(
                   controller: signInUpController.userNameController,
-                  textInputAction: TextInputAction.next,
+                  labelText: "Username",
+                  icon: const Icon(Icons.person_rounded),
                 ),
                 const SeparatorV(small: true),
-                TextField(
-                  decoration: InputDecoration(
-                    focusColor: cOrange,
-                    fillColor: cDarkPurple.withOpacity(0.5),
-                    filled: true,
-                    labelText: "Password",
-                    prefixIcon: const Icon(Icons.lock_rounded),
-                  ),
+                TextInputField(
                   controller: signInUpController.passwordController,
+                  labelText: "Password",
+                  icon: const Icon(Icons.lock_rounded),
                   obscureText: true,
-                  textInputAction: TextInputAction.next,
                 ),
                 const SeparatorV(small: true),
-                TextField(
-                  decoration: InputDecoration(
-                    focusColor: cOrange,
-                    fillColor: cDarkPurple.withOpacity(0.5),
-                    filled: true,
-                    labelText: "Konfirmasi Password",
-                    prefixIcon: const Icon(Icons.lock_rounded),
-                  ),
+                TextInputField(
                   controller: signInUpController.passwordConfirmController,
+                  labelText: "Konfirmasi Password",
+                  icon: const Icon(Icons.lock_rounded),
                   obscureText: true,
+                  textInputAction: TextInputAction.done,
                 ),
                 const SeparatorV(),
                 SizedBox(
@@ -98,47 +73,7 @@ class RegistrationPage extends StatelessWidget {
                       primary: cOrange,
                     ),
                     onPressed: () async {
-                      if (signInUpController.validateSignUp()) {
-                        try {
-                          await FirebaseAuth.instance
-                              .createUserWithEmailAndPassword(
-                            email:
-                                signInUpController.emailController.text.trim(),
-                            password:
-                                signInUpController.passwordController.text,
-                          );
-
-                          var userId = FirebaseAuth.instance.currentUser!.uid;
-                          await FirebaseFirestore.instance
-                              .collection("users")
-                              .doc(userId)
-                              .set({
-                            "email": signInUpController.emailController.text,
-                            "username":
-                                signInUpController.userNameController.text,
-                            "name": signInUpController.userNameController.text,
-                          });
-
-                          Get.offAll(
-                            () => const UserRouteProcessing(),
-                            curve: Curves.easeInOut,
-                            transition: Transition.fadeIn,
-                            duration: const Duration(seconds: 2),
-                          );
-                        } on FirebaseAuthException catch (e) {
-                          Get.dialog(
-                            AlertDialog(
-                              content: Text(e.message!),
-                              actions: [
-                                TextButton(
-                                  onPressed: () => Get.back(),
-                                  child: const Text("Tutup"),
-                                ),
-                              ],
-                            ),
-                          );
-                        }
-                      }
+                      signInUpController.signUpUser();
                     },
                     child: const Text(
                       "Registrasi",

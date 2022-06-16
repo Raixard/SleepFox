@@ -1,11 +1,14 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sleepfox/pages/login_page.dart';
+import 'package:sleepfox/utils/user_route_processing.dart';
 
+// Controller yang digunakan untuk mengatur splash screen
 class SplashScreenController extends GetxController {
+  // Menjalankan animasi bila bernilai true
   var playAnimationCheck = false.obs;
 
+  // Dijalankan saat controller diinisialisasi
   @override
   void onInit() {
     super.onInit;
@@ -13,6 +16,7 @@ class SplashScreenController extends GetxController {
     splashScreenStart();
   }
 
+  // Menjalankan animasi splash screen
   playAnimation() {
     return Timer(
       const Duration(seconds: 1),
@@ -20,12 +24,13 @@ class SplashScreenController extends GetxController {
     );
   }
 
+  // Menjalankan timer splash screen
   splashScreenStart() {
     return Timer(
       const Duration(seconds: 3),
       () {
         Get.off(
-          () => LoginPage(),
+          () => const UserRouteProcessing(),
           curve: Curves.easeInOut,
           transition: Transition.fadeIn,
           duration: const Duration(milliseconds: 1500),

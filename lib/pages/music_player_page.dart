@@ -11,6 +11,7 @@ import 'package:sleepfox/widgets/audio_widgets/audio_next_button.dart';
 import 'package:sleepfox/widgets/audio_widgets/audio_play_pause_button.dart';
 import 'package:sleepfox/widgets/audio_widgets/audio_previous_button.dart';
 import 'package:sleepfox/widgets/audio_widgets/audio_shuffle_button.dart';
+import 'package:sleepfox/widgets/audio_widgets/audio_timer_selector.dart';
 import 'package:sleepfox/widgets/main_background.dart';
 import 'package:sleepfox/widgets/small_widgets.dart';
 
@@ -35,54 +36,7 @@ class MusicPlayerPage extends StatelessWidget {
                       : "Timer Tidur",
                   color: mm.timerIsOn.value ? cOrange : Colors.white,
                   icon: const Icon(Icons.timelapse_rounded),
-                  onPressed: () {
-                    Get.bottomSheet(
-                      BottomSheet(
-                        backgroundColor: cDarkPurple,
-                        onClosing: () {},
-                        builder: (context) {
-                          return ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: mm.timerPreset.length + 1,
-                            itemBuilder: (context, index) {
-                              if (index == 0) {
-                                return TextButton(
-                                  onPressed: () {
-                                    mm.setTimer(0);
-                                    Get.back();
-                                  },
-                                  child: Text(
-                                    "Off",
-                                    style: TextStyle(
-                                        color: mm.timerIsOn.value
-                                            ? Colors.white
-                                            : cOrange),
-                                  ),
-                                );
-                              } else {
-                                return TextButton(
-                                  onPressed: () {
-                                    mm.setTimer(mm.timerPreset[index - 1]);
-                                    Get.back();
-                                  },
-                                  child: Text(
-                                    "${mm.timerPreset[index - 1]} menit",
-                                    style: TextStyle(
-                                      color: mm.timerIsOn.value &&
-                                              mm.timeSelected.value ==
-                                                  mm.timerPreset[index - 1]
-                                          ? cOrange
-                                          : Colors.white,
-                                    ),
-                                  ),
-                                );
-                              }
-                            },
-                          );
-                        },
-                      ),
-                    );
-                  },
+                  onPressed: () => Get.bottomSheet(const AudioTimerSelector()),
                 ),
               ),
             ],

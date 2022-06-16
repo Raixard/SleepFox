@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sleepfox/getx_controller/sign_in_up_form_controller.dart';
@@ -7,8 +6,6 @@ import 'package:sleepfox/utils/colors.dart';
 import 'package:sleepfox/utils/widget_styles.dart';
 import 'package:sleepfox/widgets/main_background.dart';
 import 'package:sleepfox/widgets/small_widgets.dart';
-
-import '../methods/user_route_processing.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -41,27 +38,17 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
                 const SeparatorV(),
-                TextField(
-                  decoration: InputDecoration(
-                    focusColor: cOrange,
-                    fillColor: cDarkPurple.withOpacity(0.5),
-                    filled: true,
-                    labelText: "Email",
-                    prefixIcon: const Icon(Icons.email),
-                  ),
+                TextInputField(
                   controller: signInUpController.emailController,
-                  textInputAction: TextInputAction.next,
+                  labelText: "Email",
+                  icon: const Icon(Icons.email_rounded),
+                  keyboardType: TextInputType.emailAddress,
                 ),
                 const SeparatorV(small: true),
-                TextField(
-                  decoration: InputDecoration(
-                    focusColor: cOrange,
-                    fillColor: cDarkPurple.withOpacity(0.5),
-                    filled: true,
-                    labelText: "Password",
-                    prefixIcon: const Icon(Icons.lock_rounded),
-                  ),
+                TextInputField(
                   controller: signInUpController.passwordController,
+                  labelText: "Password",
+                  icon: const Icon(Icons.lock_rounded),
                   obscureText: true,
                 ),
                 const SeparatorV(),
@@ -72,27 +59,7 @@ class LoginPage extends StatelessWidget {
                       primary: cOrange,
                     ),
                     onPressed: () async {
-                      try {
-                        await FirebaseAuth.instance.signInWithEmailAndPassword(
-                          email: signInUpController.emailController.text.trim(),
-                          password: signInUpController.passwordController.text,
-                        );
-
-                        Get.offAll(
-                          () => const UserRouteProcessing(),
-                          curve: Curves.easeInOut,
-                          transition: Transition.fadeIn,
-                          duration: const Duration(seconds: 2),
-                        );
-                      } on FirebaseAuthException catch (e) {
-                        Get.dialog(
-                            AlertDialog(content: Text(e.message!), actions: [
-                          TextButton(
-                            onPressed: () => Get.back(),
-                            child: const Text("Tutup"),
-                          )
-                        ]));
-                      }
+                      signInUpController.signInUser();
                     },
                     child: const Text(
                       "Login",

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:sleepfox/getx_controller/main_page_controller.dart';
 import 'package:sleepfox/utils/widget_styles.dart';
 
+// Card berasio 7 : 3 untuk card galeri
 class CardWide extends StatelessWidget {
   const CardWide({
     Key? key,
@@ -55,7 +56,7 @@ class CardWide extends StatelessWidget {
                     borderRadius: defaultBorderRadius,
                   ),
                   onTap: () {
-                    mpc.changeTabIndex(2);
+                    mpc.setTabIndex(2);
                   },
                   child: Container(
                     alignment: Alignment.bottomLeft,

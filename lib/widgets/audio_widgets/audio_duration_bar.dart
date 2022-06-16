@@ -2,7 +2,7 @@ import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sleepfox/getx_controller/music_controller.dart';
-import 'package:sleepfox/methods/audio_duration_listener.dart';
+import 'package:sleepfox/utils/audio_duration_listener.dart';
 
 class AudioDurationBar extends StatelessWidget {
   const AudioDurationBar({Key? key}) : super(key: key);

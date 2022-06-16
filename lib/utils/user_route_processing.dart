@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import '../pages/landing_page.dart';
-import '../pages/main_page.dart';
+import 'package:sleepfox/pages/landing_page.dart';
+import 'package:sleepfox/pages/main_page.dart';
 
 // class untuk meneruskan user ke halaman utama jika berhasil login
 // jika tidak sedang login akan kembali ke landing page
