@@ -1,3 +1,4 @@
+import 'package:cached_firestorage/remote_picture.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sleepfox/getx_controller/user_controller.dart';
@@ -13,6 +14,7 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double radius = MediaQuery.of(context).size.width / 6;
     return Scaffold(
       body: MainBackground(
         child: ListView(
@@ -20,35 +22,37 @@ class ProfilePage extends StatelessWidget {
             Column(
               children: [
                 const SizedBox(height: 72),
-                ClipOval(
-                  child: CircleAvatar(
-                    radius: MediaQuery.of(context).size.width / 6,
-                    child: Image.asset(
-                      "assets/gallery/1.jpg",
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                RemotePicture(
+                  // widget RemotePicture mengambil gambar dari firebase dan menyimpan cachenya
+                  // parameter placeholder diisi gambar custom kalau userCtrl.image.value isinya kosong yaitu waktu gambar dihapus
+                  imagePath: userCtrl.image.value,
+                  mapKey: userCtrl.image.value.replaceFirst("avatar_image", ""),
+                  useAvatarView: true,
+                  avatarViewRadius: radius,
+                  fit: BoxFit.cover,
+                  placeholder: "assets/profile/hibernating_fox.png",
                 ),
                 const SizedBox(height: 18),
                 Obx(() => Text(
-                  userCtrl.name.value,
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w700,
-                  ),
-                )),
+                      userCtrl.name.value,
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    )),
                 const SizedBox(height: 18),
                 Obx(() => Text(
-                  userCtrl.userName.value,
-                  style: const TextStyle(
-                    fontSize: 18,
-                  ),
-                )),
+                      userCtrl.userName.value,
+                      style: const TextStyle(
+                        fontSize: 18,
+                      ),
+                    )),
                 const SizedBox(height: 32),
                 ProfileButton(
                   icon: const Icon(Icons.edit_rounded),
                   text: "Edit Profil",
                   onPressed: () {
+                    userCtrl.imageEdited.value = false;
                     Get.to(() => ProfileEditPage());
                   },
                 ),
@@ -91,6 +95,8 @@ class ProfilePage extends StatelessWidget {
   }
 }
 
+// widget untuk membuat menu pilihan
+// menerima color (optional), icon, text, dan fungsi ketika menu ditekan
 class ProfileButton extends StatelessWidget {
   const ProfileButton({
     Key? key,

@@ -1,7 +1,9 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sleepfox/getx_controller/user_controller.dart';
 import 'package:sleepfox/utils/colors.dart';
+import 'package:sleepfox/widgets/avatar_widget.dart';
 import 'package:sleepfox/widgets/main_background.dart';
 
 class ProfileEditPage extends StatelessWidget {
@@ -11,6 +13,7 @@ class ProfileEditPage extends StatelessWidget {
 
   // fungsi untuk membuat kotak input
   // menerima TextEditingController dan String untuk label sebagai parameter
+  // controller nya pasti sudah ada isinya jadi di kotak inputnya isinya adalah data user saat ini
   Widget inputBox({
     required TextEditingController controller_,
     required String text,
@@ -30,9 +33,86 @@ class ProfileEditPage extends StatelessWidget {
     );
   }
 
+  // fungsi untuk menampilkan bottomsheet, yang muncul di bagian bawah layar
+  void openBottomSheet() {
+    Get.bottomSheet(
+      ListView(
+        shrinkWrap: true,
+        children: [
+          ListTile(
+            title:
+                const Text("Edit", style: TextStyle(color: Color(0xff333333))),
+            leading: const Icon(
+              Icons.photo_outlined,
+              color: Color(0xff333333),
+            ),
+            onTap: () async {
+              // ketika tombol edit dipencet maka disuruh untuk pilih gambar
+              final results = await FilePicker.platform.pickFiles(
+                allowMultiple: false,
+                type: FileType.custom,
+                allowedExtensions: ["png", "jpg"],
+              );
+
+              if (results == null) {
+                Get.snackbar("Gagal!", "Tidak ada yang diunggah",
+                    snackPosition: SnackPosition.BOTTOM,
+                    backgroundColor: cOrange,
+                    colorText: Colors.white,
+                    margin: const EdgeInsets.all(12));
+                return;
+              }
+
+              // atur path dan fileName controller menjadi path dan filename gambar yang dipilih
+              // nilai ini akan digunakan untuk mengupload file ke firebase
+              userCtrl.path.value = results.files.single.path!;
+              userCtrl.fileName.value = results.files.single.name;
+              // imageEdited diubah ke true supaya AvatarWidget menampilkan gambar dengan path lokal saat ini bukan gambar dari firebase
+              // ```
+              // Obx(() => userCtrl.imageEdited.isTrue
+              //    ? Image.file(
+              //        userCtrl.file,
+              //        fit: BoxFit.cover,
+              //      )
+              //    : RemotePicture(
+              //        imagePath: userCtrl.image.value,
+              //        mapKey: userCtrl.image.value
+              //            .replaceFirst("avatar_image/", ""),
+              //        fit: BoxFit.cover,
+              //        placeholder: "assets/profile/hibernating_fox.png",
+              //      ))
+              // ```
+              userCtrl.imageEdited.value = true;
+              Get.back();
+            },
+          ),
+          ListTile(
+            title: const Text(
+              "Hapus Foto",
+              style: TextStyle(color: Color(0xff333333)),
+            ),
+            leading: const Icon(
+              Icons.delete_outline,
+              color: Color(0xff333333),
+            ),
+            onTap: () {
+              // imageEdited diset ke false berati AvatarWidget akan menampilkan gambar dari firebase
+              // bukan dari nilai path.value
+              userCtrl.imageEdited.value = false;
+              userCtrl.deleteImage();
+              Get.back();
+            },
+          )
+        ],
+      ),
+      isScrollControlled: true,
+      backgroundColor: Colors.white,
+      elevation: 0,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    var mediaQuerySize = MediaQuery.of(context).size;
     userCtrl.nameController.text = userCtrl.name.value;
     userCtrl.emailController.text = userCtrl.email.value;
     return Scaffold(
@@ -42,10 +122,12 @@ class ProfileEditPage extends StatelessWidget {
         shadowColor: Colors.transparent,
         actions: [
           TextButton(
-              onPressed: () {
+              onPressed: () async {
                 userCtrl.updateInfo(
                   userCtrl.nameController.text,
                   userCtrl.emailController.text,
+                  userCtrl.fileName.value,
+                  userCtrl.path.value,
                 );
 
                 Get.back();
@@ -59,7 +141,7 @@ class ProfileEditPage extends StatelessWidget {
                   margin: const EdgeInsets.all(12),
                 );
               },
-              child: Text("Simpan"))
+              child: const Text("Simpan"))
         ],
       ),
       extendBodyBehindAppBar: true,
@@ -70,14 +152,9 @@ class ProfileEditPage extends StatelessWidget {
             Column(
               children: [
                 const SizedBox(height: 72),
-                ClipOval(
-                  child: CircleAvatar(
-                      radius: mediaQuerySize.width / 6,
-                      child: Image.asset(
-                        "assets/gallery/1.jpg",
-                        fit: BoxFit.cover,
-                      )),
-                ),
+                AvatarWidget(
+                    showEditIcon: true,
+                    onClicked: () async => openBottomSheet()),
                 const SizedBox(
                   height: 32,
                 ),
