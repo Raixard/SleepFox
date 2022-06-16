@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sleepfox/getx_controller/user_controller.dart';
 import 'package:sleepfox/utils/user_route_processing.dart';
 
 // Controller untuk mengatur autentikasi pengguna
@@ -11,9 +12,6 @@ class SignInUpController extends GetxController {
   final passwordController = TextEditingController();
   final passwordConfirmController = TextEditingController();
   final userNameController = TextEditingController();
-
-  final _auth = FirebaseAuth.instance;
-  final _firestore = FirebaseFirestore.instance;
 
   // Validasi registrasi user
   bool validateSignUp() {
@@ -65,6 +63,9 @@ class SignInUpController extends GetxController {
           "name": userNameController.text,
         });
 
+        final UserController userController = Get.put(UserController());
+        userController.saveUserInfo();
+
         Get.offAll(
           () => const UserRouteProcessing(),
           curve: Curves.easeInOut,
@@ -94,6 +95,9 @@ class SignInUpController extends GetxController {
         email: emailController.text.trim(),
         password: passwordController.text,
       );
+
+      final UserController userController = Get.put(UserController());
+      userController.saveUserInfo();
 
       Get.offAll(
         () => const UserRouteProcessing(),

@@ -2,15 +2,19 @@ import 'package:cached_firestorage/remote_picture.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sleepfox/getx_controller/music_controller.dart';
 import 'package:sleepfox/getx_controller/user_controller.dart';
+import 'package:sleepfox/pages/gallery_filtered_page.dart';
 import 'package:sleepfox/pages/profile_edit_page.dart';
 import 'package:sleepfox/utils/colors.dart';
 import 'package:sleepfox/widgets/main_background.dart';
+import 'package:sleepfox/widgets/small_widgets.dart';
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({Key? key}) : super(key: key);
 
   final UserController userCtrl = Get.put(UserController());
+  final mm = Get.find<MusicController>();
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +36,7 @@ class ProfilePage extends StatelessWidget {
                   fit: BoxFit.cover,
                   placeholder: "assets/profile/hibernating_fox.png",
                 ),
-                const SizedBox(height: 18),
+                const SeparatorV(),
                 Obx(() => Text(
                       userCtrl.name.value,
                       style: const TextStyle(
@@ -40,14 +44,14 @@ class ProfilePage extends StatelessWidget {
                         fontWeight: FontWeight.w700,
                       ),
                     )),
-                const SizedBox(height: 18),
+                const SeparatorV(),
                 Obx(() => Text(
                       userCtrl.userName.value,
                       style: const TextStyle(
                         fontSize: 18,
                       ),
                     )),
-                const SizedBox(height: 32),
+                const SeparatorV(),
                 ProfileButton(
                   icon: const Icon(Icons.edit_rounded),
                   text: "Edit Profil",
@@ -56,11 +60,26 @@ class ProfilePage extends StatelessWidget {
                     Get.to(() => ProfileEditPage());
                   },
                 ),
+                const SeparatorV(small: true),
                 ProfileButton(
-                  icon: const Icon(Icons.settings),
-                  text: "Pengaturan",
-                  onPressed: () {},
+                  icon: const Icon(Icons.filter_frames_rounded),
+                  text: "Gambar Saya",
+                  onPressed: () {
+                    Get.to(
+                      () => GalleryFilteredPage(isLikedPostsGallery: false),
+                    );
+                  },
                 ),
+                ProfileButton(
+                  icon: const Icon(Icons.thumb_up_rounded),
+                  text: "Gambar Disukai",
+                  onPressed: () {
+                    Get.to(
+                      () => GalleryFilteredPage(isLikedPostsGallery: true),
+                    );
+                  },
+                ),
+                const SeparatorV(small: true),
                 ProfileButton(
                   icon: const Icon(Icons.question_mark_rounded),
                   text: "Tentang",
@@ -84,7 +103,14 @@ class ProfilePage extends StatelessWidget {
                   color: Colors.red,
                   onPressed: () async {
                     await FirebaseAuth.instance.signOut();
+                    mm.audioPlayer.stop();
                   },
+                ),
+                const SeparatorV(),
+                Obx(
+                  () => mm.bottomBarVisibility.value
+                      ? const SizedBox(height: 72)
+                      : Container(),
                 ),
               ],
             ),

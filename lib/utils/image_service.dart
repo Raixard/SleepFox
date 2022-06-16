@@ -19,7 +19,7 @@ class ImageService {
     File file = File(filePath);
     try {
       await FirebaseStorage.instance
-          .ref("avatar_image/$fileName")
+          .ref(fileName)
           .putFile(file);
     } on FirebaseException catch (e) {
       if (kDebugMode) {

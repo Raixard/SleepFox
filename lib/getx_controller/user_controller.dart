@@ -17,6 +17,7 @@ class UserController extends GetxController {
 
   var path = "".obs;
   var fileName = "".obs;
+  var currentUserId = "".obs;
 
   bool isDeleted = false;
   var newImage = "";
@@ -31,8 +32,11 @@ class UserController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    saveUserInfo();
+  }
 
-    // ambil data user saat ini dan simpan ke variabel lokal
+  // ambil data user saat ini dan simpan ke variabel lokal
+  void saveUserInfo() {
     var userId = FirebaseAuth.instance.currentUser!.uid;
     FirebaseFirestore.instance
         .collection("users")
@@ -44,6 +48,7 @@ class UserController extends GetxController {
       userName.value = value.get("username");
       image.value = value.get("image");
     });
+    currentUserId.value = userId;
   }
 
   // fungsi untuk update info profil
@@ -63,7 +68,8 @@ class UserController extends GetxController {
 
     // jika saat edit foto profil tidak menekan tombol hapus maka upload filenya ke firebase
     if (isDeleted == false) {
-      await ImageService.uploadFile(path.value, fileName.value);
+      await ImageService.uploadFile(
+          path.value, "avatar_image/${fileName.value}");
       newImage = "avatar_image/${fileName.value}";
     }
     // update dengan nilai yang diupdate

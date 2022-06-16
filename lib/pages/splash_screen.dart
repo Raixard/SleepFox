@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sleepfox/getx_controller/music_controller.dart';
 import 'package:sleepfox/getx_controller/splash_screen_controller.dart';
 import 'package:sleepfox/widgets/main_background.dart';
 import 'package:sleepfox/widgets/small_widgets.dart';
 
 class SplashScreen extends StatelessWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  SplashScreen({Key? key}) : super(key: key);
+  
+  final mc = Get.put(MusicController());
 
   @override
   Widget build(BuildContext context) {
