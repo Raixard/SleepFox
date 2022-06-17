@@ -44,7 +44,6 @@ class UserController extends GetxController {
         .get()
         .then((value) {
       name.value = value.get("name");
-      email.value = value.get("email");
       userName.value = value.get("username");
       image.value = value.get("image");
     });
@@ -53,7 +52,7 @@ class UserController extends GetxController {
 
   // fungsi untuk update info profil
   // dipanggil ketika pencet simpan di ProfilEditPage
-  updateInfo(String newName, newEmail, newFileName, newPath) async {
+  updateInfo() async {
     var userId = FirebaseAuth.instance.currentUser!.uid;
 
     // generate random string sebelum nama file untuk menghindari nama file yang sama
@@ -72,16 +71,15 @@ class UserController extends GetxController {
           path.value, "avatar_image/${fileName.value}");
       newImage = "avatar_image/${fileName.value}";
     }
-    // update dengan nilai yang diupdate
+
+    // update firestore dan auth dengan nilai yang diupdate
     FirebaseFirestore.instance.collection("users").doc(userId).update({
-      "name": newName,
-      "email": newEmail,
+      "name": nameController.text,
       "image": newImage,
     });
 
-    // nilai yang diupdate ke variabel lokal
-    name.value = newName;
-    email.value = newEmail;
+    // update nilai yang diupdate ke variabel lokal
+    name.value = nameController.text;
     image.value = newImage;
     isDeleted = false;
   }

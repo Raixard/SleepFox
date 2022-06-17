@@ -114,7 +114,6 @@ class ProfileEditPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     userCtrl.nameController.text = userCtrl.name.value;
-    userCtrl.emailController.text = userCtrl.email.value;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Edit Profil"),
@@ -123,12 +122,7 @@ class ProfileEditPage extends StatelessWidget {
         actions: [
           TextButton(
               onPressed: () async {
-                userCtrl.updateInfo(
-                  userCtrl.nameController.text,
-                  userCtrl.emailController.text,
-                  userCtrl.fileName.value,
-                  userCtrl.path.value,
-                );
+                userCtrl.updateInfo();
 
                 Get.back();
 
@@ -149,22 +143,14 @@ class ProfileEditPage extends StatelessWidget {
         child: ListView(
           padding: const EdgeInsets.all(24),
           children: [
-            Column(
-              children: [
-                const SizedBox(height: 72),
-                AvatarWidget(
-                    showEditIcon: true,
-                    onClicked: () async => openBottomSheet()),
-                const SizedBox(
-                  height: 32,
-                ),
-                inputBox(controller_: userCtrl.nameController, text: "Nama"),
-                const SizedBox(
-                  height: 32,
-                ),
-                inputBox(controller_: userCtrl.emailController, text: "Email")
-              ],
+            const SizedBox(height: 72),
+            AvatarWidget(
+                showEditIcon: true,
+                onClicked: () async => openBottomSheet()),
+            const SizedBox(
+              height: 32,
             ),
+            inputBox(controller_: userCtrl.nameController, text: "Nama"),
           ],
         ),
       ),
