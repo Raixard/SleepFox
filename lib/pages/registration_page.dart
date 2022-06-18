@@ -29,6 +29,22 @@ class RegistrationPage extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               shrinkWrap: true,
               children: [
+                Column(
+                  children: [
+                    Image.asset(
+                      "assets/icon/icon-white.png",
+                      height: 150,
+                    ),
+                    const SeparatorV(small: true),
+                    const Text(
+                      "SleepFox",
+                      style: TextStyle(
+                        fontSize: 32,
+                      ),
+                    ),
+                  ],
+                ),
+                const SeparatorV(),
                 const Text(
                   "Registrasi",
                   textAlign: TextAlign.center,

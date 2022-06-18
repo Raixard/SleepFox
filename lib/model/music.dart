@@ -10,6 +10,6 @@ class Music {
     required this.uriPath,
     this.uriArtPath,
   }) {
-    uriArtPath ??= Uri.parse("assets/gallery/1.jpg");
+    uriArtPath ??= Uri.parse("assets/music/Calm_Wind.jpg");
   }
 }

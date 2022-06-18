@@ -42,11 +42,8 @@ flutter:
   assets:
     - assets/
     - assets/icon/
-    - assets/landing_page/
     - assets/main_page/
-    - assets/gallery/
     - assets/music/
-    - assets/sounds/
     - assets/profile/
 
   fonts:

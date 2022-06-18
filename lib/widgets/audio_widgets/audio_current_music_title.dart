@@ -22,6 +22,9 @@ class AudioCurrentMusicTitle extends StatelessWidget {
           final currentItem = snapshot.data!.currentSource!.tag as MediaItem;
           return Text(
             currentItem.title,
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.fade,
+            maxLines: 2,
             style: TextStyle(
               fontSize: !isSmall ? 32 : 24,
             ),

@@ -71,7 +71,9 @@ class AudioBottomBar extends StatelessWidget {
                     padding: defaultPaddingSmall,
                     child: AudioCurrentArt(),
                   ),
-                  const AudioCurrentMusicTitle(isSmall: true),
+                  const Expanded(
+                    child: AudioCurrentMusicTitle(isSmall: true),
+                  ),
                   Row(
                     children: const [
                       AudioPreviousButton(),

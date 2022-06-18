@@ -25,7 +25,7 @@ class MusicPage extends StatelessWidget {
         child: Padding(
           padding: defaultPaddingSmall.copyWith(bottom: 0),
           child: GridView.count(
-            crossAxisCount: 3,
+            crossAxisCount: 2,
             crossAxisSpacing: 12,
             mainAxisSpacing: 12,
             children: List.generate(
