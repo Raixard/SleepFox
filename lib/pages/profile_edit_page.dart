@@ -5,33 +5,12 @@ import 'package:sleepfox/getx_controller/user_controller.dart';
 import 'package:sleepfox/utils/colors.dart';
 import 'package:sleepfox/widgets/avatar_widget.dart';
 import 'package:sleepfox/widgets/main_background.dart';
+import 'package:sleepfox/widgets/small_widgets.dart';
 
 class ProfileEditPage extends StatelessWidget {
   ProfileEditPage({Key? key}) : super(key: key);
 
-  final UserController userCtrl = Get.put(UserController());
-
-  // fungsi untuk membuat kotak input
-  // menerima TextEditingController dan String untuk label sebagai parameter
-  // controller nya pasti sudah ada isinya jadi di kotak inputnya isinya adalah data user saat ini
-  Widget inputBox({
-    required TextEditingController controller_,
-    required String text,
-    dynamic type = TextInputType.text,
-  }) {
-    return TextField(
-      keyboardType: type,
-      controller: controller_,
-      decoration: InputDecoration(
-        labelText: text,
-        fillColor: cLightPurple,
-        filled: true,
-      ),
-      style: const TextStyle(
-        fontSize: 20,
-      ),
-    );
-  }
+  final UserController uc = Get.put(UserController());
 
   // fungsi untuk menampilkan bottomsheet, yang muncul di bagian bawah layar
   void openBottomSheet() {
@@ -65,8 +44,8 @@ class ProfileEditPage extends StatelessWidget {
 
               // atur path dan fileName controller menjadi path dan filename gambar yang dipilih
               // nilai ini akan digunakan untuk mengupload file ke firebase
-              userCtrl.path.value = results.files.single.path!;
-              userCtrl.fileName.value = results.files.single.name;
+              uc.path.value = results.files.single.path!;
+              uc.fileName.value = results.files.single.name;
               // imageEdited diubah ke true supaya AvatarWidget menampilkan gambar dengan path lokal saat ini bukan gambar dari firebase
               // ```
               // Obx(() => userCtrl.imageEdited.isTrue
@@ -82,7 +61,7 @@ class ProfileEditPage extends StatelessWidget {
               //        placeholder: "assets/profile/hibernating_fox.png",
               //      ))
               // ```
-              userCtrl.imageEdited.value = true;
+              uc.imageEdited.value = true;
               Get.back();
             },
           ),
@@ -98,8 +77,8 @@ class ProfileEditPage extends StatelessWidget {
             onTap: () {
               // imageEdited diset ke false berati AvatarWidget akan menampilkan gambar dari firebase
               // bukan dari nilai path.value
-              userCtrl.imageEdited.value = false;
-              userCtrl.deleteImage();
+              uc.imageEdited.value = false;
+              uc.deleteImage();
               Get.back();
             },
           )
@@ -113,7 +92,8 @@ class ProfileEditPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    userCtrl.nameController.text = userCtrl.name.value;
+    uc.nameController.text = uc.name.value;
+    uc.emailController.text = uc.email.value;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Edit Profil"),
@@ -122,18 +102,7 @@ class ProfileEditPage extends StatelessWidget {
         actions: [
           TextButton(
               onPressed: () async {
-                userCtrl.updateInfo();
-
-                Get.back();
-
-                Get.snackbar(
-                  "Berhasil!",
-                  "Profil berhasil disimpan",
-                  snackPosition: SnackPosition.BOTTOM,
-                  backgroundColor: cOrange,
-                  colorText: Colors.white,
-                  margin: const EdgeInsets.all(12),
-                );
+                uc.updateInfo();
               },
               child: const Text("Simpan"))
         ],
@@ -145,12 +114,42 @@ class ProfileEditPage extends StatelessWidget {
           children: [
             const SizedBox(height: 72),
             AvatarWidget(
-                showEditIcon: true,
-                onClicked: () async => openBottomSheet()),
-            const SizedBox(
-              height: 32,
+                showEditIcon: true, onClicked: () async => openBottomSheet()),
+            const SeparatorV(),
+            TextInputField(
+              controller: uc.nameController,
+              labelText: "Nama",
+              icon: const Icon(Icons.person_rounded),
             ),
-            inputBox(controller_: userCtrl.nameController, text: "Nama"),
+            const SeparatorV(),
+            TextInputField(
+              controller: uc.emailController,
+              labelText: "Email",
+              icon: const Icon(Icons.mail_rounded),
+            ),
+            const SeparatorV(),
+            TextInputField(
+              controller: uc.newPasswordController,
+              labelText: "Password Baru",
+              icon: const Icon(Icons.lock_reset_rounded),
+              obscureText: true,
+            ),
+            const SeparatorV(),
+            TextInputField(
+              controller: uc.newPasswordConfirmController,
+              labelText: "Konfirmasi Password Baru",
+              icon: const Icon(Icons.lock_reset_rounded),
+              obscureText: true,
+            ),
+            const SeparatorV(),
+            const Text("Masukkan password saat ini bila ingin mengubah email atau password:"),
+            const SeparatorV(small: true),
+            TextInputField(
+              controller: uc.passwordController,
+              labelText: "Password Sekarang",
+              icon: const Icon(Icons.lock_rounded),
+              obscureText: true,
+            ),
           ],
         ),
       ),
