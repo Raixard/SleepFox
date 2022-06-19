@@ -49,7 +49,9 @@ class GalleryPostFrame extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(galleryPost.title),
+            Expanded(
+              child: Text(galleryPost.title),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
