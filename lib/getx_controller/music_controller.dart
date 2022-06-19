@@ -21,7 +21,7 @@ class MusicController extends GetxController {
   // Timer agar audio playernya mati otomatis
   Timer? _timer;
   // List waktu timer
-  final List<int> _timerPreset = [15, 30, 45, 60, 75, 90, 105, 120];
+  final List<int> _timerPreset = [1, 15, 30, 45, 60, 75, 90, 105, 120];
 
   // Dijalankan saat controller dibuat
   @override
